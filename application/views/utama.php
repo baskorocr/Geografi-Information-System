@@ -41,7 +41,7 @@
             <nav uk-navbar>
                 <div class="uk-navbar-left">
                     <a href="#" class="uk-navbar-item uk-logo">
-                        <img width="140" src="<?= base_url('public/') ?>images/sc.png" /> &nbsp;
+                       OpenMaps
                     </a>
                 </div>
                 <div class="uk-navbar-right">
@@ -75,12 +75,15 @@
                     },
                 <?php } ?>
             ];
+         
 
-            var map = new L.Map('mapid', {
-                zoom: 10,
-                center: new L.latLng(3.597031, 98.678513)
-            });
-            map.addLayer(new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            // var map = new L.Map('mapid', {
+            //     zoom: 10,
+            //     center: new L.latLng(3.597031, 98.678513)
+            // });
+            const map = L.map('mapid').setView([-6.620089580473637, 106.8154096075017], 20);
+
+            map.addLayer(new L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
                     '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -105,45 +108,47 @@
                 collapsed: true,
             }));
 
-            var angin = L.icon({
-                iconUrl: '<?= base_url('public/icon/angin.png') ?>',
+            var sawah = L.icon({
+                iconUrl: '<?= base_url('public/icon/sawah.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var banjir = L.icon({
-                iconUrl: '<?= base_url('public/icon/banjir.png') ?>',
+            var cabai = L.icon({
+                iconUrl: '<?= base_url('public/icon/cabai.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var gempabumi = L.icon({
-                iconUrl: '<?= base_url('public/icon/gempabumi.png') ?>',
+            var teh = L.icon({
+                iconUrl: '<?= base_url('public/icon/teh.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var kebakaran = L.icon({
-                iconUrl: '<?= base_url('public/icon/kebakaran.png') ?>',
+            var sawit = L.icon({
+                iconUrl: '<?= base_url('public/icon/sawit.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var kecelakaan = L.icon({
-                iconUrl: '<?= base_url('public/icon/kecelakaan.png') ?>',
+            var kelapa = L.icon({
+                iconUrl: '<?= base_url('public/icon/kelapa.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var longsor = L.icon({
-                iconUrl: '<?= base_url('public/icon/longsor.png') ?>',
+            var pisang = L.icon({
+                iconUrl: '<?= base_url('public/icon/pisang.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var pohontumbang = L.icon({
-                iconUrl: '<?= base_url('public/icon/pohontumbang.png') ?>',
+            var tebu= L.icon({
+                iconUrl: '<?= base_url('public/icon/tebu.png') ?>',
+                iconSize: [30, 30]
+            });
+            
+            var kopi= L.icon({
+                iconUrl: '<?= base_url('public/icon/kopi.png') ?>',
                 iconSize: [30, 30]
             });
 
-            var tsunami = L.icon({
-                iconUrl: '<?= base_url('public/icon/tsunami.png') ?>',
-                iconSize: [30, 30]
-            });
+       
 
             var icons = "";
             for (i in data) {
@@ -154,33 +159,38 @@
                 var kategori = data[i].kategori;
 
                 if (kategori == "kebun cabai") {
-                    icons = banjir;
+                    icons = cabai;
                 } else if (kategori == "sawah") {
-                    icons = angin;
+                    icons = sawah;
                 } else if (kategori == "kebun kopi") {
-                    icons = tsunami;
+                    icons = kopi;
 
                 } else if (kategori == "kebun teh") {
-                    icons = gempabumi;
+                    icons = teh;
 
                 } else if (kategori == "kebun sawit") {
-                    icons = kebakaran;
+                    icons = sawit;
 
                 } else if (kategori == "kebun kelapa") {
-                    icons = kecelakaan;
+                    icons = kelapa;
                 } else if (kategori == "kebun pisang") {
-                    icons = longsor;
+                    icons = pisang;
                 } else if (kategori == "kebun tebu") {
-                    icons = pohontumbang;
+                    icons = tebu;
                 }
-
+                console.log(lokasi);
+           
                 var marker = new L.Marker(new L.latLng(lokasi), {
                     title: kecamatan,
                     icon: icons
                 });
                 marker.bindPopup('<b>Kecamatan: ' + kecamatan + ' <br> Lokasi: ' + tempat + '<br> Keterangan: ' + keterangan + '</b>');
                 markersLayer.addLayer(marker);
+
+                L.circle(lokasi, 50, {color:"red"}).addTo(map);
             }
+           
+     
         </script>
     </div>
 
